@@ -1,0 +1,41 @@
+HorseRace.cpp
+
+GOALS: Race 5 horces 15 spaces and print the winner
+
+
+INPUT: enter button to run each turn
+
+
+OUTPUT: print track of each horse each turn and print winner when there is one
+
+
+Steps:
+
+main()
+
+1. Create horses outside of main to be global array with 5 indexes all set to 0
+
+2. Go through each horse (for i in horse[]
+	a. decide if one or zero should be added to horses[i] by means on flipCoin()
+	b. add result of flip coin to Horses[i]
+	c. print the track of horses with printTrack()
+		-pass in both i(horse youre printing) and the value at horses[i](place horse is
+
+
+coinFlip()
+
+1. determine a random value of 1 or 0 (possibly [rand() %2])
+
+2. Return value
+
+
+printTrack()
+
+1. look at horse given
+
+2. print "." if horse is not there, i if horse is in that spot. in the spot of the value of horses[i]
+
+3. if horse is past space 14
+	a. say this horse wins 
+	b. set keepGoing to false so the while loop in main stops running.
+
