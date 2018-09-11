@@ -23,8 +23,14 @@ int main(){
 	int i;
 	int coin;
 	
-	printTrack( i, horses[i]);//print starting track postions
-		
+	printTrack( i, horses[0]);//print starting track postions
+	printTrack( i, horses[1]);
+	printTrack( i, horses[2]);
+	printTrack( i, horses[3]);
+	printTrack( i, horses[4]);
+
+	cout << endl << "Ready... Set... GO!!!" << endl;
+	
 	//take a turn by going throgh each horse
 	while(keepGoing){
 
@@ -35,19 +41,27 @@ int main(){
 		} 
 		cout << endl;		//leave space for next turn
 
-		
+		//create bool to say whether enter is pressed or not		
 		bool enter = false;
-		char resp;		
+		string resp = "";//ensure resp is nothing. this means just enter was pressed		
 
 
-		while(enter = false){
+		while(enter == false){//while enter is not pressed keep asking for enter
 		
-			cout << "Press RETURN to advance a turn!";
-			resp = cin.get();
-			
-			if(resp == '\n'){
 
-				enter = true;
+			if(keepGoing == true){
+
+				cout << "Press RETURN to advance a turn!";
+			}else{
+
+				cout << "Press enter to end the race.";				
+
+			}
+			getline(cin, resp);//ask for enter each time that is not all that is pressed
+			
+			if(resp == ""){
+
+				enter = true;//enter has been pressed
 	
 			}
 		}
