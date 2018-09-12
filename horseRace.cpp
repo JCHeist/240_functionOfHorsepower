@@ -23,11 +23,11 @@ int main(){
 	int i;
 	int coin;
 	
-	printTrack( i, horses[0]);//print starting track postions
-	printTrack( i, horses[1]);
-	printTrack( i, horses[2]);
-	printTrack( i, horses[3]);
-	printTrack( i, horses[4]);
+	printTrack( 0, horses[0]);//print starting track postions
+	printTrack( 1, horses[1]);
+	printTrack( 2, horses[2]);
+	printTrack( 3, horses[3]);
+	printTrack( 4, horses[4]);
 
 	cout << endl << "Ready... Set... GO!!!" << endl;
 	
