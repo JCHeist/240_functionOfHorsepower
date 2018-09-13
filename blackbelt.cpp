@@ -5,18 +5,34 @@
 #include <sstream>//for string streams
 #include <ctime>//time
 #include <fstream>//reading csv files:
+#include <algorithm>//for std::find
+
+struct HorseStruct {
+		
+	std::string number;
+	std::string name;
+	std::string races;
+	std::string wins;
+	std::string country;
+
+
+};
+
 
 //establish prototypes
 int coinFlip();
-void printTrack(int horse, int spot);
+void printTrack(int horse,int ln,  int spot);
 void race();
 void menu();
 void stats();
+int selectHorse();
+
 
 const int TRACK_LENGTH = 15;
 bool keepGoing = true;//set keepGoing to be true. This means the game will keep going
-int horses [5];//create array of horses. indexes are the horse number and value is what spot the horse is on the track
-int length = sizeof(horses)/sizeof(*horses);//establish variable for the length of the array
+int lane [5];//create array of horses. indexes are the horse number and value is what spot the horse is on the track
+int length = sizeof(lane)/sizeof(*lane);//establish variable for the length of the array
+
 
 void menu(){
 	bool exit = false;
@@ -64,21 +80,29 @@ void race(){
 	//declare variables for for loop
 	int i;
 	int coin;
+	int selected[5]; 
+	
 	keepGoing = true;	
+	
+	//select horses
+	for(i = 0; i < 5; i++){
+
+		std::cout << "Select horse number " << i;
+		selected[i] = selectHorse();
+
+	}
 
 	//reset horse positions
 	for(i = 0; i < length; i++){
 
-		horses[i] = 0;
+		lane[i] = 0;
 	
 	}
 
-	printTrack( 0, horses[0]);//print starting track postions
-	printTrack( 1, horses[1]);
-	printTrack( 2, horses[2]);
-	printTrack( 3, horses[3]);
-	printTrack( 4, horses[4]);
-
+	std::cout << std::endl << std::endl << "Here are your valient racers!" << std::endl;
+	for(i = 0; i < length; i++){
+		printTrack( selected[i], i,  lane[i]);//print starting track postions
+	}
 	std::cout << std::endl << "Ready... Set... GO!!!" << std::endl;
 	
 	//take a turn by going throgh each horse
@@ -86,8 +110,8 @@ void race(){
 
 		for(i = 0; i < length; i++){//look at every horse's spot
 			coin = coinFlip();//see if horse should move or not by "flipping a coin"
-			horses[i] += coin;//add value of coin flip (1 or 0)
-			printTrack( i, horses[i]);//print the track of this horse
+			lane[i] += coin;//add value of coin flip (1 or 0)
+			printTrack( selected[i], i, lane[i]);//print the track of this horse
 		} 
 		std::cout << std::endl;		//leave space for next turn
 
@@ -116,7 +140,6 @@ void race(){
 			}
 		}
 	}
-
 }
 
 int coinFlip(){
@@ -128,7 +151,10 @@ int coinFlip(){
 	return result;
 }
 
-void printTrack(int horse, int spot){
+
+
+
+void printTrack(int horse, int ln, int spot){
 
 	std::stringstream track;//create variable
 	int i;
@@ -149,7 +175,7 @@ void printTrack(int horse, int spot){
 	std::cout << track.str() <<  std::endl;//new line
 	
 
-	if((horses[horse] > TRACK_LENGTH - 1) && (keepGoing == true)){//check to see if the horse has won (is past space 15) and another horse has not yet
+	if((lane[ln] == TRACK_LENGTH) && (keepGoing == true)){//check to see if the horse has won (is past space 15) and another horse has not yet
 
 		std::cout << "Horse " << horse << " wins!!" << std::endl;//print message that this horse has won
 		keepGoing = false;//stop taking turns in the race. it has ended
@@ -157,41 +183,65 @@ void printTrack(int horse, int spot){
 	}
 }
 
+
+
+
 void stats(){
 
 
+	HorseStruct arr[10];
+	int i;	
 
-
-        std::ifstream file ( "records.csv" ); // declare file stream
-
-        std::string horse;
-
+	std::ifstream selection("records.csv");
         std::string number;
         std::string name;
         std::string races;
         std::string wins;
         std::string country;
 
-        int i;
+	std::ifstream close();
 
-        for (i = 0; i < 10; i++){
-               
-                        std::getline(file, number, ',');//get data for each horse
-                        std::getline(file, name, ',');
-                        std::getline(file, races, ',');
-                        std::getline(file, wins, ',');
-                        std::getline(file, country, ';');
+	std::cout << "----------------------------Horse Stats------------------------" << std::endl;
 
 
-			//print data
-                        std::cout << "Number: " << number << std::endl;
-                        std::cout << "Name: " << name << std::endl;
-                        std::cout << "Races: " << races << std::endl;
-                        std::cout << "Wins: " << wins << std::endl;
-                        std::cout << "Country: " << country << std::endl <<  std::endl;
+	for(i = 0; i < 10; i++){
+		 
 
-        }
+               		std::getline(selection, arr[i].number, ',');//get data for each horse
+                        std::getline(selection, arr[i].name, ',');
+                        std::getline(selection, arr[i].races, ',');
+                        std::getline(selection, arr[i].wins, ',');
+                        std::getline(selection, arr[i].country, ';');
 
+	}
+
+
+	for(i = 0; i < 10; i++){
+
+				//print data
+                        std::cout << "Number: " << arr[i].number << std::endl;
+                        std::cout << "Name: " << arr[i].name << std::endl;
+                        std::cout << "Races: " << arr[i].races << std::endl;
+                        std::cout << "Wins: " << arr[i].wins << std::endl;
+                        std::cout << "Country: " << arr[i].country << std::endl <<  std::endl;
+
+	
+	}
+
+	std::cout << "----------------------------------------------------------------" << std::endl;
+
+}
+
+
+int selectHorse(){
+
+	int val;	
+	
+	stats();
+	
+	std::cout << "What horse would you like to race here?" << std::endl;
+	std::cin >> val;
+	return val;
 }
 
 
