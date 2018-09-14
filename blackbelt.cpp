@@ -25,7 +25,7 @@ void printTrack(int horse,int ln,  int spot);
 void race();
 void menu();
 void stats();
-int selectHorse();
+int selectHorse(int[], int);
 
 
 const int TRACK_LENGTH = 15;
@@ -63,7 +63,7 @@ void menu(){
 			exit = true;
 
 		}else{
-
+			//if 1 2 or 3 is not entered, ask for input again
 			std::cout << "I'm sorry, I do not understand..." << std::endl << std::endl;
 	
 		}
@@ -81,6 +81,12 @@ void race(){
 	int i;
 	int coin;
 	int selected[5]; 
+
+	for(i = 0; i < 5; i++){
+
+		selected[i] = -1;
+
+	}
 	
 	keepGoing = true;	
 	
@@ -88,7 +94,7 @@ void race(){
 	for(i = 0; i < 5; i++){
 
 		std::cout << "Select horse number " << i;
-		selected[i] = selectHorse();
+		selected[i] = selectHorse( selected, length);//assign a selected horse to this lane
 
 	}
 
@@ -188,7 +194,7 @@ void printTrack(int horse, int ln, int spot){
 
 void stats(){
 
-
+	//create an array of structs for eack horse
 	HorseStruct arr[10];
 	int i;	
 
@@ -205,8 +211,8 @@ void stats(){
 
 
 	for(i = 0; i < 10; i++){
-		 
-
+		 	
+			//assign data in csv file to array of horseStructs
                		std::getline(selection, arr[i].number, ',');//get data for each horse
                         std::getline(selection, arr[i].name, ',');
                         std::getline(selection, arr[i].races, ',');
@@ -233,15 +239,51 @@ void stats(){
 }
 
 
-int selectHorse(){
+int selectHorse(int selected[], int length){
 
 	int val;	
+	bool unavailable = true;	
+	int i;
+	std::string hold;
+
+	stats();//show stats
 	
-	stats();
+	//ask user what horse they would like to put in this lane
+	while(unavailable){
+		std::cout << "What horse would you like to race here?" << std::endl;
+		
+		//store input in val
+		std::cin >> val;
+		
+		//if an int is not entered display warning message, clear cin, ignore cin
+		if(std::cin.fail()){
 	
-	std::cout << "What horse would you like to race here?" << std::endl;
-	std::cin >> val;
-	return val;
+			std::cout << "Nice try, please pick a numeric value." << std::endl;
+			std::cin.clear();
+			std::cin.ignore(256,'\n');
+		}else{//if an int is entered check to see if the value is from 0-9.. available horse numbers
+			unavailable = false;
+			if((val >= 0) && (val<= 9)){
+				for(i = 0; i < 5; i ++){
+			
+					if(selected[i] == val){//if horse is already selected, make the user select another one
+
+						std::cout << "That horse in not available to race. Please select another horse." << std::endl;
+						unavailable = true;	
+					}
+				}
+			}else{
+				//if an int is entered that is not 0-9 ask for a new number
+				std::cout << "Please pick a valid horse's number." << std::endl;
+				unavailable = true;
+				std::cin.clear();
+				val = 0;		
+			}
+		}
+	}	
+
+	
+return val;
 }
 
 

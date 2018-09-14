@@ -60,3 +60,94 @@ OUTPUT: print track of particular horse
 	a. say this horse wins 
 	b. set keepGoing to false so the while loop in main stops running.
 
+
+______________________________________________
+BLACKBELT
+______________________________________________
+
+
+-First change is to make the file run without "using namespace std;" 
+
+-store history of horse races using serialization (csv file... records.csv)
+
+-update values of horses after  after each race
+
+-main() will become race()
+
+-main() will now just call menu
+
+
+
+record()  (RAN OUT OF TIME TO IMPLEMENT){
+
+GOALS: Save wins and races of horses in the race
+
+INPUT: array of horses, showing who raced, and winning horse
+
+OUTPUT: Updated records.csv
+
+STEPS:
+
+1)add a win to the number of wins to the horse that won
+
+2)add a race to all horces who raced
+
+3)write and save file
+
+}
+
+menu(){
+
+GOALS: Let user decide what to do
+
+INPUT: a 1 to race, a 2 to see all horse stats, a 3 to quit the game
+
+OUTPUT: will call race or will call stats or wuit game
+
+STEPS:
+
+1) check to make sure input is a 1,2, or 3
+
+2) call race if 1 is entered, call stats if 2 is entered, quit program if 3 is entered. if not understood as one of these ask for input again
+
+
+}
+
+stats(){
+
+GOALS: Display current stats of all 10 horses in stables
+
+INPUT: records.csv file
+
+OUTPUT:	orderly stats page
+
+STEPS:
+
+1)open file
+
+2) Go through all items for horse 1 and assign them to a struct
+
+3) Go through all horses printing off their stats
+
+}
+
+int selectHorse(){
+
+GOALS: Get the user to select an int in the rancge of 0-9
+
+INPUT: pointer to array of the five selected horses
+
+OUTPUT: Int of a horse available to race in the race
+
+STEPS:
+
+1)ask for user input
+
+2)check to make sure it is an int
+
+3)make sure int is in between 0 and 9
+
+4)make sure this integer horse number is not already selectd be seeing if it is not in the selected horse array
+
+5)return int
+}
