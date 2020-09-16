@@ -205,7 +205,6 @@ void stats(){
         std::string wins;
         std::string country;
 
-	std::ifstream close();
 
 	std::cout << "----------------------------Horse Stats------------------------" << std::endl;
 
@@ -235,7 +234,7 @@ void stats(){
 	}
 
 	std::cout << "----------------------------------------------------------------" << std::endl;
-
+selection.close();
 }
 
 
